@@ -25,16 +25,16 @@ The two are connected using 15-pin FFC cables with opposite-facing contacts, ple
 
 Note that only the CAM1 shown in the image below supports VEYE cameras.
 
-![OrangePi CM4 to VEYE cam](resources/OrangePi_CM4_to_VEYE_cam.jpg)
+![OrangePi CM4 to VEYE cam](resources/OrangePi_CM4_to_VEYE_cam.JPG)
 
 ### Connection of Camera and OrangePi CM5 Board
 The two are connected using 15-pin FFC cables with opposite-facing contacts; please pay attention to the orientation of the contact surfaces.
 
 The OrangePi CM5 supports up to four VEYE cameras. The following diagram shows the hardware connection method for simultaneously connecting multiple cameras.
 
-![OrangePi CM5 to all cam overview](resources/OrangePi_CM5_to_all_cam_overview.jpg)
+![OrangePi CM5 to all cam overview](resources/OrangePi_CM5_to_all_cam_overview.JPG)
 
-![OrangePi CM5 to all cam backview](resources/OrangePi_CM5_to_all_cam_backview.jpg)
+![OrangePi CM5 to all cam backview](resources/OrangePi_CM5_to_all_cam_backview.JPG)
 
 ## Introduction to github repositories
 
