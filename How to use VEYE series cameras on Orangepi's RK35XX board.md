@@ -1,11 +1,14 @@
-# How to use VEYE and CS series cameras on Firefly's RK35XX board
+# How to use VEYE series cameras on Orange Pi's RK35XX board
+
 This is a mirror of [our wiki article](https://wiki.veye.cc/index.php/VEYE_Camera_on_Orange_Pi%27s_RK35XX_Boards).
 
 [toc]
 
 ## Overview
-VEYE series cameras are the video streaming mode MIPI cameras we designed. This article takes Orange Pi CM4 and Orange Pi CM5 board as an example to introduce how to connect VEYE series cameras to RK3566/RK3568/RK3588 system.
-We provide drivers for Linux(Ubuntu).
+VEYE series cameras are the video streaming mode MIPI cameras we designed. This article takes OrangePi CM4 and CM5 board as an example to introduce how to connect VEYE series cameras to RK3566/RK3568/RK3588 system.
+
+We provide drivers for Linux.
+
 ## Camera Module List
 
 | Series  | Model  | Status  |
@@ -15,121 +18,113 @@ We provide drivers for Linux(Ubuntu).
 | VEYE Series  | VEYE-MIPI-IMX385  | Done  |
 
 ## Hardware Setup
-VEYE series cameras are provided with Raspberry Pi compatible 15Pin FFC connector which is  .
-### Connection of camera and ADP-Tfirefly
-The two are connected using 1.0 mm pitch*15P FFC cable with opposite direction. The cable must be inserted with the silver contacts facing outside.
+We use the official baseboards of the Orange Pi CM4 and CM5, which both provide a 15-pin connector compatible with Raspberry Pi. This allows us to install our cameras directly onto their mainboards without the need for an adapter board.
 
-![VEYE camera connect to ADP-Tfirefly](resources/VEYE%20camera%20connect%20to%20ADP-Tfirefly.jpg)
+### Connection of Camera and OrangePi CM4 Board
+The two are connected using 15-pin FFC cables with opposite-facing contacts, please pay attention to the orientation of the contact surfaces.
 
-### Connection of ADP-Tfirefly and Firefly Board
-The two are connected using 0.5 mm pitch*30P FFC cable with same direction. The cable must be inserted with the silver contacts facing inside.
+Note that only the CAM1 shown in the image below supports VEYE cameras.
 
-![ADP-Tfirefly connect to Firefly board](resources/ADP-Tfirefly%20connect%20to%20Firefly%20board.jpg)
+![OrangePi CM4 to VEYE cam](resources/OrangePi_CM4_to_VEYE_cam.jpg)
 
-### Overall connection
-![Firefly Board and VEYE camera overall](resources/Firefly%20Board%20and%20VEYE%20camera%20overall.jpg)
+### Connection of Camera and OrangePi CM5 Board
+The two are connected using 15-pin FFC cables with opposite-facing contacts; please pay attention to the orientation of the contact surfaces.
 
-### FPD-Link III Camera Connection Diagram
-![Fpd-link camera to ROC-RK3588S-PC](resources/Fpdlink-III_to_RK3588S.png)
+The OrangePi CM5 supports up to four VEYE cameras. The following diagram shows the hardware connection method for simultaneously connecting multiple cameras.
+
+![OrangePi CM5 to all cam overview](resources/OrangePi_CM5_to_all_cam_overview.jpg)
+
+![OrangePi CM5 to all cam backview](resources/OrangePi_CM5_to_all_cam_backview.jpg)
 
 ## Introduction to github repositories
+
+https://github.com/veyeimaging/rk35xx_veye_bsp
+https://github.com/veyeimaging/rk35xx_orangepi
+
 includes：
 - driver source code
 - i2c toolkits
 - application demo
 
-In addition, a compiled linux kernel installation package and Android image is provided in the releases.
+In addition, a compiled linux kernel installation package and Android image is provided in the [releases](https://github.com/veyeimaging/rk35xx_orangepi/releases).
 
-## Ubuntu
-### Upgrade Firefly Ubuntu system(RK356x)
-#### Overview
-This section describes how to update the RK35xx system to support our camera modules.
+## Upgrade the Ubuntu system
 
-For the kernel version 4.19, we provide a deb installation package that can be installed directly. For the kernel version 5.10, we provide a burning image.
-For versions where no installer is provided, you will need to refer to later chapters to compile from the driver source code.
+We provide a flashing image for the release system, as well as a deb package for the Linux kernel.
 
-Although we are now using Ubuntu system as an example to introduce, other Linux distributions can also refer to this article.
+Refer to the [OrangePi CM4 user manual](http://www.orangepi.org/orangepiwiki/index.php/Orange_Pi_CM4) or the [OrangePi CM5](http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/service-and-support/Orange-Pi-CM5.html) user manual for instructions on flashing the system. Alternatively, you can use the general `dpkg` command to install the deb package.
 
-#### kernel version 5.10
-
-For the ROC-RK3588S-PC, we have provided an image of the release system.
-
-Download the latest released image file corresponding to the camera model you are using from https://github.com/veyeimaging/rk35xx_firefly/releases/ .
-
-Refer to the [Firefly documentation](https://wiki.t-firefly.com/en/ROC-RK3566-PC/03-upgrade_firmware.html) to burn in a standard system.
-
-#### kernel version 4.19
-##### Burn Firefly standard system
-Refer to the [Firefly documentation](https://wiki.t-firefly.com/en/ROC-RK3566-PC/01-bootmode.html) to burn in a standard system.
-
-##### Using prebuilt Image and dtb file
-Using the compiled debain installation package
-
-On the RK35xx board, 
-Download the latest rk356x_firefly_ubuntu.tar.gz from https://github.com/veyeimaging/rk356x_firefly/releases/ .
-```
-
-tar -xavf rk356x_firefly.tar.gz
-
-cd cd rk356x_firefly/released_images/ROC-RK3566-PC/ubuntu/
-
-sudo dpkg -i linux-image-4.19.232_4.19.232-21_arm64.deb
-```
-If the version does not match, it needs to be compiled from the source code.
-
-### Upgrade Firefly Ubuntu system(RK358x)
-
-For the ROC-RK3588S-PC, we have provided an image of the release system. 
-Download the latest rk358x_firefly_ubuntu.tar.gz from https://github.com/veyeimaging/rk356x_firefly/releases/ .
-
-Refer to the [Firefly documentation](https://wiki.t-firefly.com/en/ROC-RK3588S-PC/upgrade_bootmode.html) to burn in a standard system.
-
-### Check system status
+## Check system status
 Run the following command to confirm whether the camera is probed.
-- VEYE-MIPI-XXX
 `dmesg | grep veye`
+### CM4
 The output message appears as shown below：
-```
-veyecam2m 4-003b:  camera id is veyecam2m
-
-veyecam2m 4-003b: sensor is IMX327
+```bash
+veyecam2m 1-003b: camera id is veyecam2m
+veyecam2m 1-003b: sensor is IMX462
 ```
 - Run the following command to check the presence of video node.
 
 `ls /dev/video0`
 
 The output message appears as shown below.
-
 `video0`
 
-For ROC-RK3566-PC, the camera is connected to i2c-4, for ROC-RK3588S-PC to i2c-7.
+The correspondence of the various information is as follows:
 
-### Samples
-#### v4l2-ctl
+| CAM num | I2C | media node         | video node    |
+|---------|-----|--------------------|---------------|
+| 1       | 1   | veyecam2m 1-003b   | /dev/video0   |
 
-##### Install v4l2-utils
+### CM5
+The CM5 supports the connection of up to 4 cameras. The dmesg information includes the following content:
+```bash
+veyecam2m 3-003b:  camera id is veyecam2m
+veyecam2m 3-003b: sensor is IMX462
+veyecam2m 4-003b:  camera id is veyecam2m
+veyecam2m 4-003b: sensor is IMX462
+veyecam2m 5-003b:  camera id is veyecam2m
+veyecam2m 5-003b: sensor is IMX462
+veyecam2m 6-003b:  camera id is veyecam2m
+veyecam2m 6-003b: sensor is IMX462
+```
+The correspondence of the various information is as follows:
 
+| CAM num | I2C | media node         | video node    |
+|---------|-----|--------------------|---------------|
+| 1       | 4   | veyecam2m 4-003b   | /dev/video22  |
+| 2       | 3   | veyecam2m 3-003b   | /dev/video33  |
+| 3       | 5   | veyecam2m 5-003b   | /dev/video11  |
+| 4       | 6   | veyecam2m 6-003b   | /dev/video0   |
+
+
+## Application examples
+### v4l2-ctl
+In the following example, `/dev/video0` can be modified as needed to correspond to the video node of the camera you wish to operate.
+
+#### Install v4l2-utils
 `sudo apt-get install v4l-utils`
 
-#####  List the data formats supported by the camera
+####  List the data formats supported by the camera
 
 `v4l2-ctl --list-formats-ext`
 
-##### Snap YUV picture
+#### Snap picture
 
-`v4l2-ctl --set-fmt-video=width=1920,height=1080,pixelformat='NV12' --stream-mmap --stream-count=100 --stream-to=nv12-1920x1080.yuv`
+`v4l2-ctl --set-fmt-video=width=1920,height=1080,pixelformat='NV12' --stream-mmap --stream-count=100 --stream-to=nv12-1920x1080.yuv -d /dev/video0`
 
 For RK3566, also:
-`v4l2-ctl --set-fmt-video=width=1920,height=1080,pixelformat=UYVY --stream-mmap --stream-count=1 --stream-to=uyvy-1920x1080.yuv`
+`v4l2-ctl --set-fmt-video=width=1920,height=1080,pixelformat=UYVY --stream-mmap --stream-count=1 --stream-to=uyvy-1920x1080.yuv -d /dev/video0`
 
 Play YUV picture
 `ffplay -f rawvideo -video_size 1920x1080 -pix_fmt nv12 nv12-1920x1080.yuv`
+You can use software like YUV Player or Vooya to play the images.
 
-##### Check frame rate
-`v4l2-ctl --set-fmt-video=width=1920,height=1080,pixelformat=NV12 --stream-mmap --stream-count=-1 --stream-to=/dev/null`
+#### Check frame rate
+`v4l2-ctl --set-fmt-video=width=1920,height=1080,pixelformat=NV12 --stream-mmap --stream-count=-1 --stream-to=/dev/null -d /dev/video0`
 
 #### yavta
-```
+```bash
 git clone https://github.com/veyeimaging/yavta.git
 
 cd yavta;make
@@ -137,100 +132,38 @@ cd yavta;make
 ./yavta -c1 -Fnv12-1920x1080.yuv --skip 0 -f NV12 -s 1920x1080 /dev/video0
 ```
 
-#### gstreamer
-We provide several gstreamer routines that implement the preview, capture, and video recording functions. See the samples directory on github for details.
+### gstreamer
+We provide several gstreamer routines that implement the preview, capture, and video recording functions. See the [samples](https://github.com/veyeimaging/rk35xx_veye_bsp/tree/main/samples) directory on github for details.
 
-#### Import to OpenCV
+### Import to OpenCV
 
 First install OpenCV:
 `sudo apt install python3-opencv`
 
 We provide several routines to import camera data into opencv. See the samples directory on github for details.
 
-In addition, [this page from Firefly](https://wiki.t-firefly.com/en/Firefly-Linux-Guide/demo_OpenCV_support.html) has some reference value.
+##  Compile drivers and dtb from source code
 
-###  Compile drivers and dtb from source code
-- RK356x
-https://github.com/veyeimaging/rk35xx_veye_bsp
-[https://github.com/veyeimaging/rk35xx_firefly/tree/main/linux/drivers/rk356x](https://github.com/veyeimaging/rk35xx_firefly/tree/main/linux/drivers/rk356x)
-
-- RK358x
-https://github.com/veyeimaging/rk35xx_veye_bsp
-[https://github.com/veyeimaging/rk35xx_firefly/tree/main/linux/drivers/rk358x](https://github.com/veyeimaging/rk35xx_firefly/tree/main/linux/drivers/rk358x)
-
+https://github.com/veyeimaging/rk35xx_orangepi/tree/main/linux
 
 ## i2c script for parameter configuration
 
 Because of the high degree of freedom of our camera parameters, we do not use V4L2 parameters to control, but use scripts to configure parameters.
 
-[https://github.com/veyeimaging/rk356x_firefly/tree/main/i2c_cmd](https://github.com/veyeimaging/rk356x_firefly/tree/main/i2c_cmd)
+https://github.com/veyeimaging/rk35xx_veye_bsp/tree/main/i2c_cmd
 
 using -b option to identify which bus you want to use.
 
 - VEYE series
 Video Control Toolkits Manual ：[VEYE-MIPI-327 I2C](http://wiki.veye.cc/index.php/VEYE-MIPI-290/327_i2c/)
 
-- CS series
-Video Control Toolkits Manual ：[CS-MIPI-X I2C](http://wiki.veye.cc/index.php/CS-MIPI-X_i2c)
-
-## Android
-### Update Android system
-
-Download the latest rk356x_firefly_android.tar.gz or rk358x_firefly_android.tar.gz from https://github.com/veyeimaging/rk35xx_firefly/releases/ .
-Burn the system refer to firefly's documentation.
-### Check system status
-
-Login system via ADB, then run the following command to confirm whether the camera is probed.
-- VEYE-MIPI-XXX
-`dmesg | grep veye`
-The output message appears as shown below：
-```
-veyecam2m 4-003b:  camera id is veyecam2m
-
-veyecam2m 4-003b: sensor is IMX327
-```
-- Run the following command to check the presence of video node.
-
-`ls /dev/video0`
-
-The output message appears as shown below.
-
-`video0`
-
-The camera can be seen connected to the i2c-4.
-
-### Application example
-
-The camera can be opened using the camera program that comes with the system.
-
-### Compile system from source code
-
-- RK356x
-https://github.com/veyeimaging/rk35xx_firefly/tree/main/android/rk356x/drivers
-
-- RK358x
-https://github.com/veyeimaging/rk35xx_firefly/tree/main/android/rk358x/drivers
-
-## Known issues
-
-1. The VICAP module of RK3588 does not support outputting the UYVY format, so please use the NV12 format instead.
-
 ## References
-- ROC-RK3566-PC Manual
-[https://wiki.t-firefly.com/en/ROC-RK3566-PC/](https://wiki.t-firefly.com/en/ROC-RK3566-PC/)
-- ROC-RK3588S-PC Manual
-[https://wiki.t-firefly.com/en/ROC-RK3588S-PC/](https://wiki.t-firefly.com/en/ROC-RK3588S-PC/)
-- Firefly Linux User Guide
-[https://wiki.t-firefly.com/en/Firefly-Linux-Guide/index.html](https://wiki.t-firefly.com/en/Firefly-Linux-Guide/index.html)
+- OrangePi CM4
+http://www.orangepi.org/orangepiwiki/index.php/Orange_Pi_CM4
+
+- OrangePi CM5
+http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/service-and-support/Orange-Pi-CM5.html
 
 ## Document History
-- 2024-04-17
-Support kernel v5.10 on RK3566.
-- 2023-05-22
-Support Fpdlink-III on ubuntu system.
-- 2022-12-28
-Add support for RK358x.
-- 2022-12-06
-Support Android system.
-- 2022-10-22
+- 2025-01-09
 Release 1st version.
