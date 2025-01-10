@@ -34,11 +34,14 @@ The ADP-MV1 is connected to the OrangePi CM4 via a 15-pin FFC cable with opposit
 Note that only the CAM1 shown in the image below supports MV and RAW cameras.
 
 ![OrangePi CM4 to MV cam](resources/OrangePi_CM4_to_MV_cam.JPG)
+
 ![OrangePi CM4 to RAW cam](resources/OrangePi_CM4_to_RAW_cam.JPG)
 
 ### Camera Connection to Orange Pi CM5
 The OrangePi CM5 supports up to four cameras. The following diagram shows the hardware connection method for simultaneously connecting multiple cameras.
+
 ![OrangePi CM5 to all cam overview](resources/OrangePi_CM5_to_all_cam_overview.JPG)
+
 ![OrangePi CM5 to all cam backview](resources/OrangePi_CM5_to_all_cam_backview.JPG)
 
 ## Introduction to github repositories
