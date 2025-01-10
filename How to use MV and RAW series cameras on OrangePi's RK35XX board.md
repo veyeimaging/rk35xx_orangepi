@@ -141,11 +141,13 @@ You can see that:
 The correspondence of the various information is as follows:
 
 - CM4
+
 | CAM num | I2C | media node  | media entity name      | video node    | subdev node      |
 |---------|-----|-------------|------------------------|---------------|------------------|
 | 1       | 1   | /dev/media0 | m00_b_mvcam 1-003b     | /dev/video0   | /dev/v4l-subdev2 |
 
-- CM5 
+- CM5
+  
 | CAM num | I2C | media node  | media entity name      | video node    | subdev node      |
 |---------|-----|-------------|------------------------|---------------|------------------|
 | 1       | 4   | /dev/media2 | m00_b_mvcam 4-003b     | /dev/video22  | /dev/v4l-subdev8 |
