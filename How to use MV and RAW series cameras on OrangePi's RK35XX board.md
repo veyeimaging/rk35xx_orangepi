@@ -1,13 +1,13 @@
 
-# How to use MV and RAW series cameras on Firefly's RK35XX board
-This is a mirror of [our wiki article](http://wiki.veye.cc/index.php/MV_Camera_on_Firfly_Boards).
+# How to use MV and RAW series cameras on OrangePi's RK35XX Boards
+This is a mirror of [our wiki article](https://wiki.veye.cc/index.php/MV_Camera_on_Orange_Pi%27s_RK35XX_Boards).
 
 [toc]
 
 ## Overview
 The MV series and RAW series cameras are cameras designed for AI applications in the industrial field. They use the MIPI CSI-2 interface and are particularly suitable for use with embedded computing platforms. They have rich data formats and triggering features, extremely low latency, high bandwidth, and reliable stability.
 
-This article takes Firefly's ROC-RK3566-PC and ROC-RK3588S-PC board as an example to introduce how to connect MV and RAW series cameras to the RK3566/3K3568 and RK3588S/RK3588 system.
+This article takes OrangePi CM4 and OrangePi CM5 board as an example to introduce how to connect MV and RAW series cameras to the RK3566/3K3568 and RK3588S/RK3588 system.
 
 We provide drivers for the Linux operating system (using Ubuntu as an example).
 
@@ -26,88 +26,52 @@ We provide drivers for the Linux operating system (using Ubuntu as an example).
 | RAW Series  | RAW-MIPI-IMX462M  | Done  |
 | RAW Series  | RAW-MIPI-SC535M  | Done  |
 
-
-In addition, the driver for the V-by-One HS connection mode has been finished on the Ubuntu system.
-
 ## Hardware Setup
+We use the official baseboards of the Orange Pi CM4 and CM5, which feature a 15-pin header compatible with Raspberry Pi. For the RAW series cameras, our cameras can be directly mounted onto the baseboard without the need for an adapter board. For the MV series cameras, the ADP-MV1 adapter board is required for connection.
 
-The MV series and RAW series cameras require an ADP-MV2 adapter board to connect to the ROC-RK35xx-PC motherboard.
-### Connection of new version ADP-MV2
-#### Connection of MV-MIPI-CAM and ADP-MV2
-The two are connected using 0.5 mm pitch*30P FFC cable with opposite-side contacts. The cable must be inserted with the silver contacts facing outside.
-![ADP-MV2 to MV-MIPI-X](resources/ADP-MV2-V2_to_MV-MIPI-X.jpg)
-![ADP-MV2 to MV-MIPI-X 2](resources/ADP-MV2-V2_to_MV-MIPI-X_No.2.jpg)
+### Camera Connection to Orange Pi CM4
+The ADP-MV1 is connected to the OrangePi CM4 via a 15-pin FFC cable with opposite surface alignment; please pay attention to the orientation of the contact surfaces.
+Note that only the CAM1 shown in the image below supports MV and RAW cameras.
 
-#### Connection of RAW-MIPI-SC132M and ADP-MV2
-The two are connected using 1.0 mm pitch*15P FFC cable with opposite-side contacts. The cable must be inserted with the silver contacts facing outside.
-![ADP-MV2 to RAW-MIPI-SC132M](resources/ADP-MV2_to_RAW-MIPI-SC132M.jpg)
-![ADP-MV2 to RAW-MIPI-SC132M 2](resources/ADP-MV2_to_RAW-MIPI-SC132M_No.2.jpg)
+![OrangePi CM4 to MV cam](resources/OrangePi_CM4_to_MV_cam.JPG)
+![OrangePi CM4 to RAW cam](resources/OrangePi_CM4_to_RAW_cam.JPG)
 
-#### Connection of other RAW series camera and ADP-MV2
-The two are connected using 0.5 mm pitch*pin FFC cable with opposite-side contacts. The cable must be inserted with the silver contacts facing outside.
-![ADP-MV2 to RAW-MIPI-X](resources/ADP-MV2_to_RAW_series_camera.jpg)
-![ADP-MV2 to RAW-MIPI-X 2](resources/ADP-MV2_to_RAW_series_camera_No.2.jpg)
-
-#### Connection with Main board using ADP-MV2
-
-![RK to ADP-MV2 and MV cam](resources/RK-ADP-MV2-MV-MIPI_01.jpg)
-
-### Connection of old version ADP-MV2
-#### Connection of MV-MIPI-CAM and ADP-MV2
-The two are connected using 0.5 mm pitch*30P FFC cable with opposite direction. The cable must be inserted with the silver contacts facing outside.
-![ADP-MV2 to MV-MIPI-X](resources/ADP-MV2-MV-MIPI_01.jpg)
-![ADP-MV2 to MV-MIPI-X 2](resources/ADP-MV2-MV-MIPI_02.jpg)
-#### Connection of RAW-MIPI-CAM and ADP-MV2
-The two are connected using 1.0 mm pitch*15P FFC cable with opposite direction. The cable must be inserted with the silver contacts facing outside.
-![ADP-MV2 to RAW-MIPI-X](resources/ADP-MV2-RAW-MIPI_02.jpg)
-![ADP-MV2 to RAW-MIPI-X 2](resources/ADP-MV2-RAW-MIPI_01.jpg)
-
-#### Connection with Main board using ADP-MV2
-
-![RK to ADP-MV2 and MV cam](resources/RK-ADP-MV2-MV-MIPI_01.jpg)
-
-### V-by-One-HS-KIT Camera Connection Diagram
-![VBYONE connection with rk3588](resources/VBYONE-connection-with-rk3588.jpg)
+### Camera Connection to Orange Pi CM5
+The OrangePi CM5 supports up to four cameras. The following diagram shows the hardware connection method for simultaneously connecting multiple cameras.
+![OrangePi CM5 to all cam overview](resources/OrangePi_CM5_to_all_cam_overview.JPG)
+![OrangePi CM5 to all cam backview](resources/OrangePi_CM5_to_all_cam_backview.JPG)
 
 ## Introduction to github repositories
 
 https://github.com/veyeimaging/rk35xx_veye_bsp
-https://github.com/veyeimaging/rk35xx_firefly
+https://github.com/veyeimaging/rk35xx_orangepi
 
 includes：
 - driver source code
 - i2c toolkits
 - application demo
-In addition, a compiled linux kernel installation package and Android image is provided in the [releases](https://github.com/veyeimaging/rk356x_firefly/releases).
+In addition, a compiled linux kernel installation package is provided in the releases.[releases](https://github.com/veyeimaging/rk35xx_orangepi/releases).
 
-## Upgrade Firefly Ubuntu system
+## Upgrade the Ubuntu system
 
-For the ROC-RK3566-PC and ROC-RK3588S-PC, we have provided an image of the release system.
+We provide a flashing image for the release system, as well as a deb package for the Linux kernel.
 
-Download the latest Ubuntu imge from https://github.com/veyeimaging/rk35xx_firefly/releases/ .
-
-Refer to the Firefly documentation [ ROC-RK3566-PC](https://wiki.t-firefly.com/en/ROC-RK3566-PC/03-upgrade_firmware.html) [ROC-RK3588S-PC](https://wiki.t-firefly.com/en/ROC-RK3588S-PC/upgrade_bootmode.html) to burn in a standard system.
+Refer to the [OrangePi CM4 user manual](http://www.orangepi.org/orangepiwiki/index.php/Orange_Pi_CM4) or the [OrangePi CM5 user manual](http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/service-and-support/Orange-Pi-CM5.html) for instructions on flashing the system. Alternatively, you can use the general dpkg command to install the deb package.
 
 ## Check system status
-### Whether the camera is correctly recognized
 After system update, reboot the main board.
-
-Execute the following command on the main board to check if the camera is properly connected.
+Run the following command to confirm whether the camera is probed.
+```bash
+sudo dmesg | grep mvcam
 ```
-dmesg | grep mvcam
+### CM4
+The CM4 supports camera connection only through the CAM1 interface. Taking the RAW-MIPI-SC132M as an example, the dmesg output contains the following information:
+
+The output message appears as shown below:
+```bash
+mvcam 1-003b: camera is: RAW-MIPI-SC132M
+mvcam 1-003b: firmware version: 0x1040000
 ```
-You can see the camera model and the camera version number probed.
-
-A prompt as below indicates that the MV-MIPI-IMX296M camera is detected on the i2c-7 bus.
-```
-mvcam 7-003b: camera is：MV-MIPI-IMX296M
-
-mvcam 7-003b: firmware version: 0x1290133
-```
-On the ROC-RK3588S-PC, the camera is mounted on i2c-7, with an i2c address of 0x3b.
-
-On the ROC-RK3566-PC, the camera is mounted on i2c-4.
-
 - Check the video0 device node:
 ```
 ls /dev/video0
@@ -117,36 +81,74 @@ You should see:
 video0
 ```
 After successfully identifying the camera, the camera will be recognized as /dev/video0.
-
-### Using media-ctl to view topology
-
-Using the media-ctl command can clearly display the current topography structure.
+### CM5
+The CM5 supports the connection of up to four cameras. Taking the RAW-MIPI-SC132M as an example, the dmesg output contains the following information:
+```bash
+mvcam 3-003b: camera is: RAW-MIPI-SC132M
+mvcam 3-003b: firmware version: 0x1040000
+mvcam 4-003b: camera is: RAW-MIPI-SC132M
+mvcam 4-003b: firmware version: 0x1040000
+mvcam 5-003b: camera is: RAW-MIPI-SC132M
+mvcam 5-003b: firmware version: 0x1040000  
+mvcam 6-003b: camera is: RAW-MIPI-SC132M
+mvcam 6-003b: firmware version: 0x1040000
 ```
-media-ctl -p -d /dev/media0
+
+### Viewing the Topology with media-ctl
+
+Let's take CM5's CAM1 as an example for explanation.
+
+By using the media-ctl command, you can clearly display the current topology.
+```bash
+media-ctl -p -d /dev/media2
 ```
+
 #### Link relationship
-mv camera->rockchip-csi2-dphy0->rockchip-mipi-csi2->stream_cif_mipi_id0 - - ->DDR(/dev/video0)
+mv camera->rockchip-csi2-dphy1->rockchip-mipi-csi2->stream_cif_mipi_id0 - - ->DDR(`/dev/video22`)
 
-The application can obtain images through the /dev/video0 node.
+The application can obtain images through the `/dev/video22` node.
+
 #### mv camera entity information
-Taking the MV-MIPI-IMX296M as an example:
+
+Taking the RAW-MIPI-SC132M as an example:
 ```
-- entity 63: m00_b_mvcam 7-003b (1 pad, 1 link)
+- entity 63: m00_b_mvcam 4-003b (1 pad, 1 link)
+
              type V4L2 subdev subtype Sensor flags 0
-             device node name /dev/v4l-subdev2
+
+             device node name /dev/v4l-subdev8
+
         pad0: Source
-                [fmt:Y8_1X8/1456x1088@100/6000 field:none]
-                -> "rockchip-csi2-dphy0":0 [ENABLED]
+
+                [fmt:Y8_1X8/1080x1280@100/12000 field:none]
+
+                -> "rockchip-csi2-dphy1":0 [ENABLED]
 ```
+
 You can see that:
 
-- The complete name of this entity is: `m00_b_mvcam 7-003b`.(It is m00_b_mvcam 4-003bon ROC-RK3566-PC.)
+- The complete name of this entity is: `m00_b_mvcam 4-003b`.
 - It is a V4L2 subdev (Sub-Device) Sensor.
-- Its corresponding node is `/dev/v4l-subdev2`, which can be opened and - configured by applications (such as `v4l2-ctl`).
-- Its output format is `[fmt:Y8_1X8/1456x1088@100/6000 field:none]`, where - `Y8_1X8` is a shorthand for a mbus-code, which will be listed in the next section of this article.
-- The current resolution is `1456x1088`.
-- The current frame interval is `100/6000`, which means the frame rate is 60.
+- Its corresponding node is `/dev/v4l-subdev8`, which can be opened and - configured by applications (such as `v4l2-ctl`).
+- Its output format is `[fmt:Y8_1X8/1080x1280@100/12000 field:none]`, where - `Y8_1X8` is a shorthand for a mbus-code, which will be listed in the next section of this article.
+- The current resolution is `1080x1280`.
+- The current frame interval is `100/12000`, which means the frame rate is 120.
 - The data format output by the camera can be modified using the media-ctl command.
+
+The correspondence of the various information is as follows:
+
+- CM4
+| CAM num | I2C | media node  | media entity name      | video node    | subdev node      |
+|---------|-----|-------------|------------------------|---------------|------------------|
+| 1       | 1   | /dev/media0 | m00_b_mvcam 1-003b     | /dev/video0   | /dev/v4l-subdev2 |
+
+- CM5 
+| CAM num | I2C | media node  | media entity name      | video node    | subdev node      |
+|---------|-----|-------------|------------------------|---------------|------------------|
+| 1       | 4   | /dev/media2 | m00_b_mvcam 4-003b     | /dev/video22  | /dev/v4l-subdev8 |
+| 2       | 3   | /dev/media3 | m01_b_mvcam 3-003b     | /dev/video33  | /dev/v4l-subdev11|
+| 3       | 5   | /dev/media1 | m00_b_mvcam 5-003b     | /dev/video11  | /dev/v4l-subdev5 |
+| 4       | 6   | /dev/media0 | m00_b_mvcam 6-003b     | /dev/video0   | /dev/v4l-subdev2 |
 
 #### mbus-code list
 MV series and RAW series cameras have different data format capabilities, which can be found in the data manual for each camera model.
@@ -203,16 +205,17 @@ We recommend using [vooya](https://www.offminor.de/) as the player, which suppor
 Also, y8 file can be used with this player: [YUV Displayer Deluxe](https://yuv-player-deluxe.software.informer.com/2.6/).
 
 ## Application examples
+Please note that in the following sections, `/dev/media0`, `/dev/video0`, and `/dev/v4l-subdev2` should be replaced with the actual values as described in the previous sections.
 ###  Configuring  global variables
 Based on the board model, configure the I2C_BUS global variable as follows:
 
-- ROC-RK3588S-PC
+- OrangePi CM4
 ```
-export I2C_BUS=7
+export I2C_BUS=1
 ```
-- ROC-RK3566-PC
+- OrangePi CM5
 ```
-export I2C_BUS=4
+export I2C_BUS=6
 ```
 
 For the convenience of later descriptions, global variables are configured here according to the sensor size.
@@ -377,7 +380,7 @@ After setting data format, resolution, frame rate，run:
 ./yavta -c1 -Fy8-${WIDTH}x${HEIGHT}.raw --skip 0 -f Y8 -s ${WIDTH}x${HEIGHT} /dev/video0
 ```
 #### Example of import image to OpenCV
-See the [samples](https://github.com/veyeimaging/rk356x_firefly/tree/main/linux/samples) directory on github for details.
+See the [samples](https://github.com/veyeimaging/rk35xx_veye_bsp/tree/main/samples) directory on github for details.
 ```
 ./v4l2dev_2_opencv_show_grey.py --width 1456 --height 1088 --fps 60 --i2c 7
 ```
@@ -388,7 +391,7 @@ Note that the RAW series does not support the UYVY format.
 
 Note: To increase the maximum frame rate and bandwidth, some modules no longer support the UYVY format. Please use the "fmtcap" command in the script to read the registers to confirm the specific configuration.
 
-We provide several gstreamer routines that implement the preview function. See the [samples](https://github.com/veyeimaging/rk356x_firefly/tree/main/linux/samples) directory on github for details.
+We provide several gstreamer routines that implement the preview function. See the [samples](https://github.com/veyeimaging/rk35xx_veye_bsp/tree/main/samples) directory on github for details.
 
 ### Trigger mode
 #### Set data format, resolution, frame rate
@@ -431,30 +434,13 @@ We provide shell scripts to configure the parameters.
 
 [mv_mipi_i2c.sh user guide](http://wiki.veye.cc/index.php/Mv_mipi_i2c.sh_user_guide)
 
-## Question Feedback
-We are committed to providing richer possibilities for image applications on embedded platforms. Therefore, our software for embedded platforms is based on the principle of open source.
-
-If you have any questions or suggestions about our existing software, please feel free to submit them to the [forum](http://forum.veye.cc/) or email our technical staff at xumm#csoneplus.com.
-
 ## References
-- ROC-RK3588S-PC Manual
-https://wiki.t-firefly.com/en/ROC-RK3566-PC/
+- OrangePi CM4
+http://www.orangepi.org/orangepiwiki/index.php/Orange_Pi_CM4
 
-- ROC-RK3588S-PC Manual
-https://wiki.t-firefly.com/en/ROC-RK3588S-PC/
-
-- Firefly Linux User Guide
-https://wiki.t-firefly.com/en/Firefly-Linux-Guide/index.html
+- OrangePi CM5
+http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/service-and-support/Orange-Pi-CM5.html
 
 ## Document History
-- 2024-07-09
-Add support for RAW-MIPI-SC535M.
-
-- 2024-04-17
-Support RK3566.
-
-- 2023-07-31
-Support V-by-One on ubuntu system.
-
-- 2023-04-12
+- 2025-01-09
 Release 1st version.
