@@ -44,7 +44,7 @@ Copy the files from the `dts` directory into the following path:
 orangepi-build/kernel/orange-pi-5.10-rk35xx/arch/arm64/boot/dts/rockchip
 ```
 
-**Important Note**: You can only choose one of the device tree files: either `mvcam` or `cam2m`, not both.
+**Important Note**: You can only choose one of the device tree files: either `mvcam` or `cam2m`, not both. After copying, touch the files in the target directory to update their timestamps and ensure compilation.
 
 ### 6. Building the Final Image
 
