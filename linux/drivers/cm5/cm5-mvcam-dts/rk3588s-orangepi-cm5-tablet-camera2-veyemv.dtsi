@@ -17,7 +17,7 @@
 
 			mipidcphy0_in_ucam0: endpoint@0 {
 				reg = <0>;
-				remote-endpoint = <&mvcam_out4>;
+				remote-endpoint = <&mvcam_out2>;
 				data-lanes = <1 2>;
 			};
 		};
@@ -37,22 +37,21 @@
 
 &i2c6 {
 	status = "okay";
-	pinctrl-names = "default";
-	pinctrl-0 = <&i2c6m3_xfer>;
 
-	mvcam_4: mvcam@3b{
+
+	mvcam_2: mvcam@3b{
 		status = "okay";
         compatible = "veye,mvcam";
         reg = <0x3b>;
 		clocks = <&ext_cam_ov5647_clk>;
 		clock-names = "ext_cam_ov5647_clk";
-		pwdn-gpios = <&gpio1 RK_PD3 GPIO_ACTIVE_HIGH>;
+		pwdn-gpios = <&gpio4 RK_PA7 GPIO_ACTIVE_HIGH>;
 		rockchip,camera-module-index = <0>;
 		rockchip,camera-module-facing = "back";
 		rockchip,camera-module-name = "NC";
 		rockchip,camera-module-lens-name = "NC";
 		port {
-			mvcam_out4: endpoint {
+			mvcam_out2: endpoint {
 				remote-endpoint = <&mipidcphy0_in_ucam0>;
 				data-lanes = <1 2>;
 			};

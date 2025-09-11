@@ -4,22 +4,24 @@
  *
  */
 
-&csi2_dcphy0 {
+&csi2_dcphy1 {
 	status = "okay";
 
 	ports {
 		#address-cells = <1>;
 		#size-cells = <0>;
+
 		port@0 {
 			reg = <0>;
 			#address-cells = <1>;
 			#size-cells = <0>;
 
-			mipidcphy0_in_ucam0: endpoint@0 {
+			mipidcphy1_in_ucam0: endpoint@0 {
 				reg = <0>;
-				remote-endpoint = <&mvcam_out4>;
+				remote-endpoint = <&veyecam2m_out3>;
 				data-lanes = <1 2>;
 			};
+
 		};
 
 		port@1 {
@@ -27,33 +29,31 @@
 			#address-cells = <1>;
 			#size-cells = <0>;
 
-			csidcphy0_out: endpoint@0 {
+			csidcphy1_out: endpoint@0 {
 				reg = <0>;
-				remote-endpoint = <&mipi0_csi2_input>;
+				remote-endpoint = <&mipi1_csi2_input>;
 			};
 		};
 	};
 };
 
-&i2c6 {
+&i2c7 {
 	status = "okay";
-	pinctrl-names = "default";
-	pinctrl-0 = <&i2c6m3_xfer>;
 
-	mvcam_4: mvcam@3b{
+	veyecam2m_3: veyecam2m@3b{
 		status = "okay";
-        compatible = "veye,mvcam";
+        compatible = "veye,veyecam2m";
         reg = <0x3b>;
 		clocks = <&ext_cam_ov5647_clk>;
 		clock-names = "ext_cam_ov5647_clk";
-		pwdn-gpios = <&gpio1 RK_PD3 GPIO_ACTIVE_HIGH>;
+		pwdn-gpios = <&gpio1 RK_PD2 GPIO_ACTIVE_HIGH>;
 		rockchip,camera-module-index = <0>;
 		rockchip,camera-module-facing = "back";
 		rockchip,camera-module-name = "NC";
 		rockchip,camera-module-lens-name = "NC";
 		port {
-			mvcam_out4: endpoint {
-				remote-endpoint = <&mipidcphy0_in_ucam0>;
+			veyecam2m_out3: endpoint {
+				remote-endpoint = <&mipidcphy1_in_ucam0>;
 				data-lanes = <1 2>;
 			};
 		};
@@ -61,7 +61,7 @@
 
 };
 
-&mipi0_csi2 {
+&mipi1_csi2 {
 	status = "okay";
 
 	ports {
@@ -73,9 +73,9 @@
 			#address-cells = <1>;
 			#size-cells = <0>;
 
-			mipi0_csi2_input: endpoint@1 {
+			mipi1_csi2_input: endpoint@1 {
 				reg = <1>;
-				remote-endpoint = <&csidcphy0_out>;
+				remote-endpoint = <&csidcphy1_out>;
 			};
 		};
 
@@ -84,44 +84,43 @@
 			#address-cells = <1>;
 			#size-cells = <0>;
 
-			mipi0_csi2_output: endpoint@0 {
+			mipi1_csi2_output: endpoint@0 {
 				reg = <0>;
-				remote-endpoint = <&cif_mipi_in0>;
+				remote-endpoint = <&cif_mipi_in1>;
 			};
 		};
 	};
 };
 
-&rkcif_mipi_lvds {
+&rkcif_mipi_lvds1 {
 	status = "okay";
 
 	port {
-		cif_mipi_in0: endpoint {
-			remote-endpoint = <&mipi0_csi2_output>;
+		cif_mipi_in1: endpoint {
+			remote-endpoint = <&mipi1_csi2_output>;
 		};
 	};
 };
 
-&rkcif_mipi_lvds_sditf {
+&rkcif_mipi_lvds1_sditf {
 	status = "disabled";
 
-	port {
-		mipi_lvds_sditf: endpoint {
-			remote-endpoint = <&isp1_in1>;
-		};
-	};
+        port {
+                mipi1_lvds_sditf: endpoint {
+                        remote-endpoint = <&isp1_in0>;
+                };
+        };
 };
 
-&rkisp1_vir0 {
+&rkisp1_vir1 {
 	status = "disabled";
-
 	port {
 		#address-cells = <1>;
 		#size-cells = <0>;
 
-		isp1_in1: endpoint@0 {
+		isp1_in0: endpoint@0 {
 			reg = <0>;
-			remote-endpoint = <&mipi_lvds_sditf>;
+			remote-endpoint = <&mipi1_lvds_sditf>;
 		};
 	};
 };
