@@ -7,7 +7,7 @@ This is a mirror of [our wiki article](https://wiki.veye.cc/index.php/MV_Camera_
 ## Overview
 The MV series and RAW series cameras are cameras designed for AI applications in the industrial field. They use the MIPI CSI-2 interface and are particularly suitable for use with embedded computing platforms. They have rich data formats and triggering features, extremely low latency, high bandwidth, and reliable stability.
 
-This article takes OrangePi CM4 and OrangePi CM5 board as an example to introduce how to connect MV and RAW series cameras to the RK3566/3K3568 and RK3588S/RK3588 system.
+This article takes OrangePi CM4 and OrangePi CM5 and CM5 tablet board as an example to introduce how to connect MV and RAW series cameras to the RK3566/3K3568 and RK3588S/RK3588 system.
 
 We provide drivers for the Linux operating system (using Ubuntu as an example).
 
@@ -21,6 +21,7 @@ We provide drivers for the Linux operating system (using Ubuntu as an example).
 | MV Series  | MV-MIPI-IMX287M  | Done  |
 | MV Series  | MV-MIPI-IMX265M  | Done  |
 | MV Series  | MV-MIPI-IMX264M  | Done  |
+| MV Series  | MV-MIPI-GMAX4002M  | Done  |
 | RAW Series  | RAW-MIPI-SC132M  | Done  |
 | RAW Series  | RAW-MIPI-AR0234M  | Done  |
 | RAW Series  | RAW-MIPI-IMX462M  | Done  |
@@ -43,6 +44,13 @@ The OrangePi CM5 supports up to four cameras. The following diagram shows the ha
 ![OrangePi CM5 to all cam overview](resources/OrangePi_CM5_to_all_cam_overview.JPG)
 
 ![OrangePi CM5 to all cam backview](resources/OrangePi_CM5_to_all_cam_backview.JPG)
+
+### Camera Connection to Orange Pi CM5 tablet
+Due to differences in connector formats, we have successfully interfaced modules for both CAM2 and CAM3 on the OrangePi CM5 tablet. The diagram below illustrates the connection methods for the RAW series and MV series.
+
+![OrangePi CM5 tablet to RAW cam](resources/OrangePi_CM5_tablet_to_RAW_cam.JPG)
+
+![OrangePi CM5 tablet to MV cam](resources/OrangePi_CM5_tablet_to_MV_cam.JPG)
 
 ## Introduction to github repositories
 
@@ -96,7 +104,15 @@ mvcam 5-003b: firmware version: 0x1040000
 mvcam 6-003b: camera is: RAW-MIPI-SC132M
 mvcam 6-003b: firmware version: 0x1040000
 ```
+CM5 tablet
 
+The CM5 supports the connection of up to two cameras. Taking the RAW-MIPI-SC132M as an example, the dmesg output contains the following information:
+```bash
+mvcam 6-003b: camera is: RAW-MIPI-SC132M
+mvcam 6-003b: firmware version: 0x1040000
+mvcam 7-003b: camera is: RAW-MIPI-SC132M
+mvcam 7-003b: firmware version: 0x1040000
+```
 ### Viewing the Topology with media-ctl
 
 Let's take CM5's CAM1 as an example for explanation.
@@ -154,6 +170,13 @@ The correspondence of the various information is as follows:
 | 2       | 3   | /dev/media3 | m01_b_mvcam 3-003b     | /dev/video33  | /dev/v4l-subdev11|
 | 3       | 5   | /dev/media1 | m00_b_mvcam 5-003b     | /dev/video11  | /dev/v4l-subdev5 |
 | 4       | 6   | /dev/media0 | m00_b_mvcam 6-003b     | /dev/video0   | /dev/v4l-subdev2 |
+
+- CM5 tablet
+  
+| CAM num | I2C | media node  | media entity name      | video node    | subdev node      |
+|---------|-----|-------------|------------------------|---------------|------------------|
+| 2       | 6   | /dev/media0 | m00_b_mvcam 6-003b     | /dev/video0  | /dev/v4l-subdev2 |
+| 3       | 7   | /dev/media1 | m00_b_mvcam 7-003b     | /dev/video11  | /dev/v4l-subdev5|
 
 #### mbus-code list
 MV series and RAW series cameras have different data format capabilities, which can be found in the data manual for each camera model.
@@ -447,5 +470,8 @@ http://www.orangepi.org/orangepiwiki/index.php/Orange_Pi_CM4
 http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/service-and-support/Orange-Pi-CM5.html
 
 ## Document History
+- 2025-09-16
+Add support for CM5 tablet.
+
 - 2025-01-09
 Release 1st version.
