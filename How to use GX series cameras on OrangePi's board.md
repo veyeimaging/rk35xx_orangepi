@@ -1,5 +1,5 @@
 # How to use GX series cameras on OrangePi's RK35XX board
-This is a mirror of [our wiki article](https://wiki.veye.cc/index.php/MV_Camera_on_Orange_Pi%27s_RK35XX_Boards).
+This is a mirror of [our wiki article](https://wiki.veye.cc/index.php/GX_Camera_on_Orange_Pi%27s_RK35XX_Boards).
 
 [toc]
 
