@@ -18,19 +18,22 @@ We provide drivers for the Linux operating system (using Ubuntu as an example).
 ## Hardware Setup
 We use the official baseboards of the Orange Pi CM4 and CM5, which feature a 15-pin header compatible with Raspberry Pi. For the GX series cameras, our cameras can be directly mounted onto the baseboard without the need for an adapter board.
 ### Camera Connection to Orange Pi CM4
-The ADP-MV1 is connected to the OrangePi CM4 via a 15-pin FFC cable with opposite surface alignment; please pay attention to the orientation of the contact surfaces.
 
-Note that only the CAM1 shown in the image below supports GX cameras.
 ![OrangePi CM4 to GX cam](resources/gx_to_orangepi_cm4_resized.png)
+
+![OrangePi CM4 to GXC cam](resources/gxc_to_orangepi_cm4_resized.png)
 ### Camera Connection to Orange Pi CM5
 The OrangePi CM5 supports up to four cameras. The following diagram shows the hardware connection method for simultaneously connecting multiple cameras.
 
 ![OrangePi CM5 to GX cam](resources/gx_to_orangepi_cm5_resized.png)
 
+![OrangePi CM5 to GXC cam](resources/gxc_to_orangepi_cm5_resized.png)
 ### Camera Connection to Orange Pi CM5 tablet
 Due to differences in connector formats, we have successfully interfaced modules for both CAM2 and CAM3 on the OrangePi CM5 tablet. The diagram below illustrates the connection methods for the GX series.
 
 ![OrangePi CM5 tablet to GX cam](resources/gx_to_orangepi_cm5_table_resized.png)
+
+![OrangePi CM5 tablet to GXC cam](resources/gxc_to_orangepi_cm5_table_resized.png)
 ## Introduction to github repositories
 
 https://github.com/veyeimaging/rk35xx_orangepi
