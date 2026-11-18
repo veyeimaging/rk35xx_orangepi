@@ -261,18 +261,6 @@
 	};
 };
 
-&i2c3{
-        status = "okay";
-        pinctrl-names = "default";
-        pinctrl-0 = <&i2c3m4_xfer>;  /* ĞŞ¸ÄÎª i2c3m4_xfer */
-    };
-
-&uart2 {
-	status = "disabled";
-	pinctrl-names = "default";
-	pinctrl-0 = <&uart2m0_xfer>;
-};
-
 &i2c1 {
 	status = "okay";
 	pinctrl-names = "default";
