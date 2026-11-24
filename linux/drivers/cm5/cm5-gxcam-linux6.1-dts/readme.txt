@@ -1,0 +1,1 @@
+The .dtsi files for CM5 with Linux 6.1 are identical to those for Linux 5.10. However, the rk3588s-orangepi-cm5.dts file differs.
